@@ -32,14 +32,15 @@ body {
 .tabs {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 1000;
   display: flex;
   gap: 8px;
   align-items: center;
   flex-wrap: wrap;
   padding: 10px 4vw;
-  background: #0a0a0aee;
-  backdrop-filter: blur(8px);
+  background: rgba(10, 10, 10, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 2px solid var(--pk);
 }
 
@@ -71,7 +72,7 @@ body {
 /* Progression Bar */
 #pg {
   position: fixed;
-  z-index: 60;
+  z-index: 1001;
   top: 0;
   left: 0;
   height: 5px;
