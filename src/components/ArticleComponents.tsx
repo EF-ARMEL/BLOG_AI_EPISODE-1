@@ -95,11 +95,15 @@ export function Toc({ sections, onProgress }: { sections: { id: string; title: s
     }
   }, [activeId]);
 
+  const trackRef = React.useRef<HTMLDivElement>(null);
+
   const scrollToc = (direction: 'left' | 'right') => {
-    const toc = document.querySelector('.toc') as HTMLElement;
-    if (toc) {
-      const scrollAmount = 200;
-      toc.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    if (trackRef.current) {
+      const scrollAmount = Math.max(180, Math.round(trackRef.current.clientWidth * 0.75));
+      trackRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth',
+      });
     }
   };
 
@@ -114,7 +118,7 @@ export function Toc({ sections, onProgress }: { sections: { id: string; title: s
       >
         ‹
       </button>
-      <div className="toc-track">
+      <div className="toc-track" ref={trackRef}>
         {sections.map((s) => (
           <a
             key={s.id}
