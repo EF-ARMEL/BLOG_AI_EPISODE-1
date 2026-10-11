@@ -15,6 +15,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(130px + env(safe-area-inset-top, 0px));
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -23,6 +25,7 @@ body {
   color: var(--wh);
   font: 400 17px/1.7 var(--bd);
   overflow-x: hidden;
+  max-width: 100vw;
 }
 
 /* Navigation / Header */
@@ -582,8 +585,43 @@ sup.fn a {
 /* Responsive */
 @media (max-width: 860px) {
   .art {
-    grid-template-columns: 1fr;
-    padding: 6vh 5vw;
+    grid-template-columns: 100%;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 4vh 4vw;
+    gap: 20px;
+    overflow-x: hidden;
+  }
+
+  .d0 article {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    box-shadow: 6px 6px 0 var(--pk);
+    padding: 20px 14px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .d0 article h2 {
+    max-width: 100%;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .tbl {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pr pre {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   .toc {
@@ -592,9 +630,13 @@ sup.fn a {
     z-index: 20;
     flex-direction: row;
     overflow-x: auto;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
     background: #0a0a0af2;
     padding: 8px 0;
     gap: 8px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .toc b, .pct {
@@ -606,6 +648,7 @@ sup.fn a {
     border: 2px solid #ffffff33;
     border-radius: 99px;
     padding: 6px 12px;
+    font-size: 12px;
   }
 
   .toc a.on {
