@@ -85,17 +85,19 @@ export function Toc({ sections, onProgress }: { sections: { id: string; title: s
     };
   }, [onProgress]);
 
-  // Centrage automatique de la pastille active dans le sommaire mobile
+  const trackRef = React.useRef<HTMLDivElement>(null);
+
+  // Centrage automatique horizontal UNIQUEMENT dans le conteneur .toc-track (sans perturber le scroll vertical de la page)
   useEffect(() => {
-    if (activeId) {
-      const activeEl = document.querySelector(`.toc a[href="#${activeId}"]`) as HTMLElement;
+    if (activeId && trackRef.current) {
+      const activeEl = trackRef.current.querySelector(`a[href="#${activeId}"]`) as HTMLElement;
       if (activeEl) {
-        activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        const track = trackRef.current;
+        const targetLeft = activeEl.offsetLeft - (track.clientWidth - activeEl.clientWidth) / 2;
+        track.scrollTo({ left: targetLeft, behavior: 'smooth' });
       }
     }
   }, [activeId]);
-
-  const trackRef = React.useRef<HTMLDivElement>(null);
 
   const scrollToc = (direction: 'left' | 'right') => {
     if (trackRef.current) {
