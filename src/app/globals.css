@@ -34,40 +34,62 @@ body {
   top: 0;
   z-index: 1000;
   display: flex;
-  gap: 8px;
   align-items: center;
-  flex-wrap: wrap;
-  padding: 10px 4vw;
+  gap: 6px;
+  padding: 8px 4vw;
   background: rgba(10, 10, 10, 0.96);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 2px solid var(--pk);
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.logo-link {
+  text-decoration: none;
+  flex-shrink: 0;
+  margin-right: auto;
 }
 
 .tabs b {
   font: 400 1.5rem 'Bangers';
   letter-spacing: .06em;
   color: var(--pk);
-  margin-right: auto;
 }
 
-.tabs button, .tabs a {
-  font: 800 12px var(--bd);
+.tabs-nav {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.nav-link {
+  font: 800 11px var(--bd);
   color: var(--wh);
-  background: none;
+  background: transparent;
   border: 2px solid #ffffff33;
   border-radius: 99px;
-  padding: 8px 14px;
+  padding: 6px 12px;
   cursor: pointer;
   text-decoration: none;
-  transition: .3s;
+  transition: background .25s, color .25s, border-color .25s;
+  white-space: nowrap;
 }
 
-.tabs button[aria-pressed="true"], .tabs a[aria-current="page"] {
+.nav-link:hover {
+  border-color: var(--pk);
+  color: var(--pk);
+}
+
+.nav-link-active,
+.nav-link[aria-current="page"] {
   background: var(--pk);
-  color: #000;
+  color: #000 !important;
   border-color: var(--pk);
 }
+
 
 /* Progression Bar */
 #pg {
