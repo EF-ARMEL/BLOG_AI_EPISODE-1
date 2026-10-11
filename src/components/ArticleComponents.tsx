@@ -85,29 +85,68 @@ export function Toc({ sections, onProgress }: { sections: { id: string; title: s
     };
   }, [onProgress]);
 
+  // Centrage automatique de la pastille active dans le sommaire mobile
+  useEffect(() => {
+    if (activeId) {
+      const activeEl = document.querySelector(`.toc a[href="#${activeId}"]`) as HTMLElement;
+      if (activeEl) {
+        activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+  }, [activeId]);
+
+  const scrollToc = (direction: 'left' | 'right') => {
+    const toc = document.querySelector('.toc') as HTMLElement;
+    if (toc) {
+      const scrollAmount = 200;
+      toc.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   return (
     <aside className="toc">
       <b>Sommaire</b>
-      {sections.map((s) => (
+      <button
+        type="button"
+        className="toc-arrow prev"
+        aria-label="Titre précédent"
+        onClick={() => scrollToc('left')}
+      >
+        ‹
+      </button>
+      <div className="toc-track">
+        {sections.map((s) => (
+          <a
+            key={s.id}
+            href={`#${s.id}`}
+            className={activeId === s.id ? 'on' : ''}
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById(s.id)?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            {s.title}
+          </a>
+        ))}
         <a
-          key={s.id}
-          href={`#${s.id}`}
-          className={activeId === s.id ? 'on' : ''}
+          href="#sources"
+          className={activeId === 'sources' ? 'on' : ''}
           onClick={(e) => {
             e.preventDefault();
-            document.getElementById(s.id)?.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('sources')?.scrollIntoView({ behavior: 'smooth' });
           }}
         >
-          {s.title}
+          Sources et note éditoriale
         </a>
-      ))}
-      <a href="#sources" className={activeId === 'sources' ? 'on' : ''}
-         onClick={(e) => {
-            e.preventDefault();
-            document.getElementById('sources')?.scrollIntoView({ behavior: 'smooth' });
-          }}>
-        Sources et note éditoriale
-      </a>
+      </div>
+      <button
+        type="button"
+        className="toc-arrow next"
+        aria-label="Titre suivant"
+        onClick={() => scrollToc('right')}
+      >
+        ›
+      </button>
       <span className="pct">{percent} %</span>
     </aside>
   );

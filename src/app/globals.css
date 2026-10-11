@@ -197,6 +197,16 @@ body {
   margin-bottom: 8px;
 }
 
+.toc-arrow {
+  display: none;
+}
+
+.toc-track {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 .toc a {
   color: var(--mut);
   text-decoration: none;
@@ -627,17 +637,64 @@ sup.fn a {
 
   .toc {
     position: sticky;
-    top: 60px;
-    z-index: 20;
+    top: 56px;
+    z-index: 100;
+    display: flex;
     flex-direction: row;
-    overflow-x: auto;
-    max-width: 100%;
+    align-items: center;
+    gap: 6px;
+    max-width: 100vw;
     width: 100%;
     box-sizing: border-box;
-    background: #0a0a0af2;
-    padding: 8px 0;
+    background: rgba(10, 10, 10, 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--pk);
+    padding: 8px 6px;
+  }
+
+  .toc-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #000;
+    border: 2px solid var(--pk);
+    color: var(--pk);
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+    cursor: pointer;
+    flex-shrink: 0;
+    user-select: none;
+    transition: transform .1s, background-color .2s;
+  }
+
+  .toc-arrow:active {
+    transform: scale(0.9);
+    background: var(--pk);
+    color: #000;
+  }
+
+  .toc-track {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     gap: 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
+    flex: 1;
+    padding: 2px 4px;
+    scroll-padding: 0 8px;
+  }
+
+  .toc-track::-webkit-scrollbar {
+    display: none;
   }
 
   .toc b, .pct {
@@ -645,11 +702,18 @@ sup.fn a {
   }
 
   .toc a {
+    scroll-snap-align: center;
+    flex-shrink: 0;
     white-space: nowrap;
     border: 2px solid #ffffff33;
     border-radius: 99px;
-    padding: 6px 12px;
-    font-size: 12px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all .2s;
   }
 
   .toc a.on {
