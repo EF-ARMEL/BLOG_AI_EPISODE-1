@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blog Nousdev — 3 directions BD</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Bangers&family=Manrope:wght@400;600;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+:root{--bk:#0a0a0a;--pk:#FF2E93;--pk2:#ff8cc4;--wh:#f6f1e9;--mut:#b9aebb;--bd:'Manrope',system-ui,sans-serif;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*:before,*:after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(130px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bk);color:var(--wh);font:400 17px/1.7 var(--bd);overflow-x:hidden}
+.tabs{position:sticky;top:0;z-index:50;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 4vw;background:#0a0a0aee;backdrop-filter:blur(8px);border-bottom:2px solid var(--pk)}
+.tabs b{font:400 1.5rem 'Bangers';letter-spacing:.06em;color:var(--pk);margin-right:auto}
+.tabs button{font:800 12px var(--bd);color:var(--wh);background:none;border:2px solid #ffffff33;border-radius:99px;padding:8px 14px;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--pk);color:#000;border-color:var(--pk)}
+#pg{position:fixed;z-index:60;top:0;left:0;height:5px;width:calc(var(--p,0)*100%);background:var(--pk);pointer-events:none;transition:opacity .3s}
+#pg[data-d="1"]{width:6px;height:calc(var(--p,0)*100vh)}
+#pg[data-d="2"]{height:8px;background:repeating-linear-gradient(90deg,var(--pk) 0 14px,transparent 14px 20px)}
+.why{margin:0;padding:14px 4vw;font:600 13px/1.5 var(--bd);color:var(--mut);border-bottom:1px dashed #ffffff33}
+.why:before{content:'Direction · ';color:var(--pk);font-weight:800}
+.cap{display:inline-block;background:var(--wh);color:#000;font:800 11px var(--bd);letter-spacing:.14em;text-transform:uppercase;padding:6px 10px;border:3px solid #000;box-shadow:4px 4px 0 var(--pk)}
+.cta{display:inline-block;font:400 1.4rem 'Bangers';letter-spacing:.06em;text-transform:uppercase;background:var(--pk);color:#000;border:4px solid #000;box-shadow:6px 6px 0 var(--wh);padding:12px 24px;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.cta:hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--wh)}
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s,transform .8s cubic-bezier(.2,.8,.2,1)}.rv.in{opacity:1;transform:none}
+/* article */
+.art{display:grid;grid-template-columns:230px minmax(0,1fr);gap:4vw;max-width:1180px;margin:0 auto;padding:10vh 4vw}
+.toc{position:sticky;top:90px;align-self:start;display:flex;flex-direction:column;gap:2px;font-size:14px}
+.toc b{font:400 1.6rem 'Bangers';color:var(--pk);margin-bottom:8px}
+.toc a{color:var(--mut);text-decoration:none;padding:6px 0 6px 12px;border-left:3px solid #ffffff22;line-height:1.35;transition:.3s}
+.toc a.on{color:#fff;border-color:var(--pk)}
+.pct{margin-top:10px;font:800 12px var(--bd);color:var(--pk)}
+.kick{display:block;color:var(--pk);font:800 12px var(--bd);letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
+.at{font-size:clamp(2rem,4.5vw,3.5rem);line-height:1;margin:0 0 28px;text-transform:uppercase}
+.lead{font-size:1.2em;line-height:1.6}
+article h2{font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.1;margin:48px 0 14px;text-transform:uppercase}
+article ul,article ol{padding-left:1.2em}li{margin:4px 0}
+blockquote{margin:30px 0;padding:18px 22px;font:700 1.25em/1.3 var(--bd)}
+mark{background:none;color:inherit}
+.pr{position:relative;margin:30px 0;border:3px dashed var(--pk);background:#111}
+.pt{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;font:800 11px var(--bd);letter-spacing:.14em;color:var(--pk);background:#0008}
+.pr pre{margin:0;padding:14px;white-space:pre-wrap;font:500 14px/1.6 ui-monospace,Menlo,Consolas,monospace;color:var(--wh)}
+.cp{font:800 12px var(--bd);background:var(--pk);color:#000;border:2px solid #000;padding:6px 12px;cursor:pointer}
+/* contact */
+.ct{max-width:760px;margin:0 auto;padding:10vh 5vw 12vh}
+.ct h2{font-size:clamp(2.2rem,6vw,4.4rem);margin:0 0 24px;line-height:.95;text-transform:uppercase}
+.f{display:grid;gap:18px}
+.fld{display:block}.fld span{display:block;font:800 12px var(--bd);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.fld input,.fld textarea{width:100%;font:600 16px var(--bd);color:#000;background:var(--wh);border:4px solid #000;padding:12px 14px;outline:0;border-radius:0}
+.fld input:focus,.fld textarea:focus{box-shadow:0 0 0 4px var(--pk)}
+.err{margin:0;min-height:1.5em;color:var(--pk);font-weight:800}
+.ok,.sent .f{display:none}.sent .ok{display:block}
+.sig{padding:30px 4vw 60px;text-align:center;font:400 1.6rem 'Bangers';letter-spacing:.08em;color:var(--pk)}
+@keyframes pop{0%,100%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(-5deg) scale(1.08)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes wob{0%{transform:rotate(-.8deg)}33%{transform:rotate(.6deg) translate(2px,-1px)}66%{transform:rotate(-.2deg) translate(-2px,1px)}}
+@keyframes stamp{from{transform:rotate(-10deg) scale(3);opacity:0}to{transform:rotate(-10deg) scale(1);opacity:1}}
+/* A · La Planche */
+.d0 h1,.d0 h2,.d0 .at,.d0 .zap,.d0 .boom{font-family:'Bangers';font-weight:400;letter-spacing:.04em}
+.d0 .hero{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:minmax(130px,17vh);gap:14px;padding:5vh 4vw;background:radial-gradient(circle,#ff2e9344 1.4px,transparent 1.9px) 0 0/11px 11px}
+.d0 .pn{position:relative;border:4px solid var(--wh);padding:clamp(14px,2vw,28px);overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:12px;clip-path:inset(0 100% 0 0);transform:rotate(var(--r,0deg)) translateY(24px);transition:clip-path .9s cubic-bezier(.7,0,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.d0.in .pn{clip-path:inset(0);transform:rotate(var(--r,0deg))}
+.d0 .p2{transition-delay:.18s}.d0 .p3{transition-delay:.36s}.d0 .p4{transition-delay:.54s}
+.d0 .p1{grid-column:1/8;grid-row:1/4;background:var(--pk) radial-gradient(circle,#0002 2px,transparent 2.5px) 0 0/10px 10px;color:#000;--r:-.5deg;align-items:flex-start;border-color:#000}
+.d0 .p1 h1{font-size:clamp(2.8rem,7.4vw,7rem);line-height:.88;margin:0;text-transform:uppercase}
+.d0 .p2{grid-column:8/13;grid-row:1/2;background:#111;--r:.6deg;justify-content:center}
+.d0 .bub{position:relative;background:var(--wh);color:#000;border:4px solid #000;border-radius:26px;padding:14px 20px;font-weight:800;line-height:1.35}
+.d0 .bub:after{content:'';position:absolute;left:34px;bottom:-26px;border:14px solid transparent;border-top:22px solid #000}
+.d0 .p3{grid-column:8/11;grid-row:2/4;background:var(--wh);--r:-.8deg;align-items:center;justify-content:center;border-color:#000}
+.d0 .zap{font-size:clamp(3.5rem,9vw,8rem);color:var(--pk);-webkit-text-stroke:3px #000;line-height:.9;animation:pop 1.4s steps(2) infinite}
+.d0 .p4{grid-column:11/13;grid-row:2/4;background:#000;border-color:var(--pk);--r:.8deg;font-weight:800;font-size:15px;line-height:1.4}
+.d0 article{background:var(--wh);color:#141414;border:4px solid #000;box-shadow:12px 12px 0 var(--pk);padding:clamp(20px,4vw,56px)}
+.d0 article h2{display:inline-block;background:var(--pk);color:#000;padding:2px 14px;transform:skew(-6deg);font-size:clamp(1.8rem,3.4vw,2.8rem)}
+.d0 .kick{color:#b0105f}
+.d0 blockquote{background:#fff;border:4px solid #000;border-radius:26px;box-shadow:6px 6px 0 #000}
+.d0 mark{background:linear-gradient(transparent 50%,var(--pk2) 50%)}
+.d0 .fld span{color:var(--wh)}
+.d0 .boom{font-size:clamp(4rem,12vw,9rem);color:var(--pk);-webkit-text-stroke:3px var(--wh);line-height:.9;animation:pop 1.4s steps(2) infinite}
+/* B · Le Webtoon */
+.d1 h1,.d1 h2,.d1 .at,.d1 .toc b{font-family:'Anton';font-weight:400;letter-spacing:.01em}
+.d1 .vp{position:relative;overflow:hidden;min-height:82vh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:22px;padding:14vh 8vw;margin-top:-6vw;clip-path:polygon(0 0,100% 6vw,100% 100%,0 calc(100% - 6vw))}
+.d1 .vp:first-child{margin-top:0;clip-path:polygon(0 0,100% 0,100% 100%,0 calc(100% - 6vw))}
+.d1 .vp>*{position:relative}
+.d1 .v1{background:#0a0a0a}
+.d1 .v1:before{content:'';position:absolute;inset:-60%;background:repeating-conic-gradient(from 0deg,#ff2e9338 0 1.4deg,transparent 1.4deg 7deg);animation:spin 70s linear infinite}
+.d1 .v1 h1{font-size:clamp(3.6rem,14vw,11rem);line-height:.86;margin:0;text-transform:uppercase;text-shadow:6px 6px 0 var(--pk);transform:translateY(calc(var(--sy,0)*-.1px))}
+.d1 .v1 em{font-style:normal;color:var(--pk);text-shadow:6px 6px 0 var(--wh)}
+.d1 .v2{background:var(--pk) radial-gradient(circle,#0003 2.4px,transparent 3px) 0 0/13px 13px;color:#000}
+.d1 .v3{background:#0a0a0a radial-gradient(circle at 80% 100%,#ff2e9355,transparent 55%);align-items:flex-start}
+.d1 .big{font:800 clamp(1.5rem,3.8vw,2.8rem)/1.2 var(--bd);max-width:22ch;margin:0}
+.d1 .art{counter-reset:ch}
+.d1 article h2{counter-increment:ch;font-size:clamp(2.2rem,4.6vw,3.6rem);border-left:8px solid var(--pk);padding-left:16px}
+.d1 article h2:before{content:'CHAPITRE 0' counter(ch);display:block;font:800 11px var(--bd);letter-spacing:.22em;color:var(--pk);margin-bottom:6px}
+.d1 blockquote{border-left:8px solid var(--pk);background:#ff2e9318;font-size:1.4em}
+.d1 mark{background:var(--pk);color:#000;padding:0 4px}
+.d1 .fld span{display:inline-block;background:var(--wh);color:#000;padding:8px 16px;border-radius:20px 20px 20px 4px;letter-spacing:.02em;text-transform:none;font-size:14px;margin-bottom:8px}
+.d1 .fld input,.d1 .fld textarea{display:block;margin-left:auto;width:min(100%,540px);background:var(--pk);border:0;border-radius:20px 20px 4px 20px}
+.d1 ::placeholder{color:#0008}
+.d1 .big2{font:400 clamp(2.4rem,7vw,5rem)/1 'Anton';text-transform:uppercase;margin:14px 0 0}
+/* C · Le Riso */
+.d2 h1,.d2 h2,.d2 .at,.d2 .bigname{font-family:'Archivo Black';font-weight:400;letter-spacing:-.02em}
+.d2 .hero{position:relative;padding:8vh 5vw 10vh;background:radial-gradient(circle,#ff2e9333 1.6px,transparent 2.1px) 0 0/9px 9px}
+.d2 .bigname{font-size:clamp(3.4rem,17vw,15rem);line-height:.85;text-shadow:5px 5px 0 var(--pk),-3px -3px 0 #ffffff55;animation:wob .7s steps(1) infinite}
+.d2 .mk{font:400 clamp(1.4rem,3vw,2.2rem) 'Permanent Marker',cursive;color:var(--pk);margin:8px 0 0;transform:rotate(-2deg);transform-origin:left}
+.d2 .col{position:relative;display:grid;grid-template-columns:1.2fr 1fr;gap:3vw;margin-top:6vh;align-items:start}
+.d2 .cd{padding:clamp(22px,3vw,40px)}
+.d2 .c1{background:var(--pk);color:#000;transform:rotate(-1.6deg);clip-path:polygon(0 2%,6% 0,18% 2%,34% 0,52% 2%,70% 0,86% 2%,100% 0,100% 98%,90% 100%,72% 98%,54% 100%,32% 98%,14% 100%,0 98%)}
+.d2 .c1 h1{font-size:clamp(2rem,5vw,4rem);line-height:.92;margin:14px 0 0;text-transform:uppercase}
+.d2 .c2{background:var(--wh);color:#111;margin-top:6vh;clip-path:polygon(0 0,100% 2%,98% 100%,3% 98%);font-weight:600}
+.d2 .c2.rv.in{transform:rotate(1.4deg)}
+.d2 .stk{position:absolute;right:2vw;top:-7vh;width:118px;height:118px;border-radius:50%;background:#fff;color:#000;display:grid;place-items:center;text-align:center;font:400 1.05rem/1.1 'Permanent Marker';border:4px solid var(--pk);animation:wob .7s steps(1) infinite}
+.d2 article h2{font:400 clamp(1.8rem,3.6vw,2.8rem)/1.15 'Permanent Marker';text-transform:none;color:var(--pk);text-decoration:underline wavy var(--pk);text-underline-offset:9px;text-decoration-thickness:2px}
+.d2 blockquote{background:var(--wh);color:#111;transform:rotate(-1deg);box-shadow:8px 8px 0 var(--pk);font:400 1.4em/1.3 'Permanent Marker'}
+.d2 mark{background:linear-gradient(transparent 50%,#ff2e93aa 50%)}
+.d2 .pr{margin-top:46px;background:var(--wh);border:0;box-shadow:8px 8px 0 var(--pk);transform:rotate(.4deg)}
+.d2 .pr:before{content:'copie-moi ↓';position:absolute;top:-34px;right:8px;font:400 1.2rem 'Permanent Marker';color:var(--pk);transform:rotate(4deg)}
+.d2 .pr pre{color:#111}.d2 .pt{background:#111}
+.d2 .fld{background:var(--wh);color:#111;padding:14px 16px;box-shadow:6px 6px 0 var(--pk);transform:rotate(-1deg)}
+.d2 .fld:nth-child(2){transform:rotate(1.2deg)}.d2 .fld:nth-child(3){transform:rotate(-.6deg)}
+.d2 .fld input,.d2 .fld textarea{border:0;border-bottom:3px solid #111;background:transparent;padding:6px 0}
+.d2 .fld input:focus,.d2 .fld textarea:focus{box-shadow:none;border-color:var(--pk)}
+.d2 .stamp{display:inline-block;font:400 clamp(3.4rem,13vw,9rem) 'Archivo Black';color:var(--pk);border:8px solid var(--pk);padding:0 22px;animation:stamp .5s steps(5) both}
+@media(max-width:860px){
+ .art{grid-template-columns:1fr;padding:6vh 5vw}
+ .toc{position:sticky;top:60px;z-index:20;flex-direction:row;overflow-x:auto;background:#0a0a0af2;padding:8px 0;gap:8px}
+ .toc b,.pct{display:none}.toc a{white-space:nowrap;border:2px solid #ffffff33;border-radius:99px;padding:6px 12px}.toc a.on{background:var(--pk);color:#000;border-color:var(--pk)}
+ .d0 .hero{grid-template-columns:1fr;grid-auto-rows:auto}.d0 .pn{grid-column:1!important;grid-row:auto!important;min-height:140px}
+ .d2 .col{grid-template-columns:1fr}.d2 .stk{top:-9vh}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.d1 .v1 h1{transform:none}}
+</style>
+</head>
+<body>
+<div id="pg"></div>
+<nav class="tabs"><b>Nousdev</b><button>A · La Planche</button><button>B · Le Webtoon</button><button>C · Le Riso</button></nav>
+<main id="app"></main>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const H=[['s1',`Créer avec l'IA ne veut pas dire lui confier toutes les décisions`,`Le rôle humain`],['s2',`Choisissez un projet assez petit pour pouvoir le terminer`,`Un petit projet`],['s3',`Écrivez le brief avant le premier prompt`,`Brief et prompt`],['s4',`Travaillez par petites boucles`,`Petites boucles`]];
+const PROMPT=`Je veux créer un mini-blog destiné aux débutants qui découvrent la création de sites avec l'IA. La première version comprend un accueil, une liste de trois articles et leurs pages de lecture. Utilise des contenus d'exemple clairement identifiés. Je veux une typographie lisible, une navigation simple et une composition adaptée au mobile. N'ajoute ni comptes utilisateurs, ni paiements, ni formulaire. Avant de commencer, résume le besoin, propose la structure et indique ce qui sera fonctionnel ou simulé. Respecte le socle technique de l'environnement utilisé.`;
+const ART=`<p class="lead">Créer un site en décrivant ce que vous voulez à une intelligence artificielle paraît presque trop simple. Vous écrivez quelques phrases, une interface apparaît, et vous pouvez déjà cliquer sur des boutons.</p>
+<p>Mais entre une démonstration séduisante et un projet qui fonctionne vraiment, il reste un chemin : définir le besoin, vérifier les résultats, comprendre où vont les données et corriger les erreurs.</p>
+<h2 id="s1">${H[0][1]}</h2>
+<p>Votre rôle ne disparaît pas. Il change. Vous devez notamment décider :</p>
+<ul><li>à qui s'adresse le projet ;</li><li>quel problème il résout ;</li><li>ce qui doit réellement fonctionner ;</li><li>comment reconnaître un résultat correct ;</li><li>quelles informations ne doivent jamais être exposées.</li></ul>
+<blockquote>L'IA peut vous aider à avancer, mais <mark>son assurance ne constitue pas une preuve.</mark></blockquote>
+<h2 id="s2">${H[1][1]}</h2>
+<p>Le premier projet doit vous apprendre une méthode, pas vous obliger à résoudre dix problèmes à la fois. Un mini-blog est un bon exercice parce que son objectif est facile à comprendre : permettre à quelqu'un de découvrir vos articles et de les lire confortablement.</p>
+<h2 id="s3">${H[2][1]}</h2>
+<p>« Fais-moi un beau blog moderne » laisse presque toutes les décisions ouvertes. L'IA devra deviner le public, le contenu, les pages et les comportements attendus.</p>
+<div class="pr"><div class="pt"><span>PROMPT À ADAPTER</span><button class="cp" type="button">Copier</button></div><pre>${PROMPT}</pre></div>
+<h2 id="s4">${H[3][1]}</h2>
+<ol><li>Demandez une amélioration précise.</li><li>Observez ce qui a changé.</li><li>Testez le comportement concerné.</li><li>Vérifiez que le reste fonctionne encore.</li><li>Conservez un point de retour avec l'historique disponible.</li></ol>
+<p>Votre première réussite n'est pas d'avoir beaucoup de fonctionnalités. C'est d'avoir un petit parcours qui fonctionne de bout en bout.</p>`;
+const FORM=`<form class="f" novalidate><label class="fld"><span>Nom</span><input name="n" autocomplete="name" placeholder="Ton nom"></label><label class="fld"><span>Email</span><input name="e" type="email" autocomplete="email" placeholder="ton@email.com"></label><label class="fld"><span>Message</span><textarea name="m" rows="5" placeholder="Ton message…"></textarea></label><p class="err" aria-live="polite"></p><button class="cta" type="submit">Envoyer</button></form>`;
+const OK=[`<div class="boom">BOUM !</div><p>Message envoyé. Nousdev te répond vite.</p>`,`<span class="cap">Fin de l'épisode</span><p class="big2">Ton message est parti.<br>À suivre…</p>`,`<div class="stamp">REÇU !</div><p class="mk">Nousdev te répond vite.</p>`];
+const WHY=[`La Planche — une page de BD pop : cases asymétriques, trames Ben-Day, bulles. Les cases s'ouvrent en rideau l'une après l'autre. L'article se lit dans un grand encadré crème : le mouvement reste autour du texte, jamais dessus.`,`Le Webtoon — une lecture verticale en cases diagonales qui se chevauchent, lignes de vitesse et encadrés de narration. Chaque article devient un chapitre, avec une progression verticale sur le bord de l'écran.`,`Le Riso — une zine imprimée à la main : encres rose et noir décalées, papier déchiré, autocollants, animation « à la main » saccadée. Le texte reste sur fond uni, avec des surlignages au marqueur.`].map(t=>t+` Mobile : colonne unique. Mouvements réduits : tout s'affiche sans animation.`);
+const HERO=[`<section class="hero"><div class="pn p1"><span class="cap">Nousdev présente</span><h1>Créer avec l'IA sans brûler les étapes</h1><a class="cta" href="#art">Lire l'article</a></div><div class="pn p2"><div class="bub">Un blog pour apprendre à créer avec l'IA, et surtout à vérifier ce qu'elle produit.</div></div><div class="pn p3"><span class="zap">ZAP !</span></div><div class="pn p4"><span class="cap">Épisode 01</span><p style="margin:0">Votre premier projet : un mini-blog, pas à pas.</p></div></section>`,
+`<section class="hero"><div class="vp v1"><span class="cap rv">Épisode 01 · par Nousdev</span><h1 class="rv">Créer avec l'IA<br><em>sans brûler</em><br>les étapes</h1></div><div class="vp v2"><p class="big rv">Un blog pour apprendre à créer avec l'IA, et surtout à vérifier ce qu'elle produit.</p><span class="cap rv">Narrateur : Nousdev</span></div><div class="vp v3"><p class="big rv" style="color:var(--wh)">Premier projet : un mini-blog, étape par étape.</p><a class="cta rv" href="#art">Lire l'article ↓</a></div></section>`,
+`<section class="hero"><div class="bigname">NOUSDEV</div><p class="mk">le blog qui apprend à vérifier l'IA ✎</p><div class="col"><div class="cd c1 rv"><span class="cap">Épisode 01</span><h1>Créer avec l'IA sans brûler les étapes</h1></div><div class="cd c2 rv"><p style="margin-top:0">Un blog pour apprendre à créer avec l'IA, et surtout à vérifier ce qu'elle produit.</p><a class="cta" href="#art">Lire l'article</a></div><div class="stk">NOUVEL<br>ARTICLE ✦</div></div></section>`];
+const page=k=>`<div class="pg d${k}"><p class="why">${WHY[k]}</p>${HERO[k]}<section class="art" id="art"><aside class="toc"><b>Sommaire</b>${H.map(h=>`<a href="#${h[0]}">${h[2]}</a>`).join('')}<span class="pct">0 %</span></aside><article><span class="kick">Création avec l'IA · 9 oct. 2026 · ≈ 12 min · par Nousdev</span><h1 class="at">Apprendre le vibe coding en 2026 : votre premier projet, sans brûler les étapes</h1>${ART}</article></section><section class="ct"><h2>Écris à Nousdev</h2>${FORM}<div class="ok" aria-live="polite">${OK[k]}</div></section><footer class="sig">Nousdev · blog BD</footer></div>`;
+const pg=$('#pg');let io;
+function render(k){
+ $('#app').innerHTML=page(k);pg.dataset.d=k;
+ $$('.tabs button').forEach((b,i)=>b.setAttribute('aria-pressed',i===k));
+ scrollTo({top:0,behavior:'instant'});
+ const root=$('.pg');requestAnimationFrame(()=>requestAnimationFrame(()=>root.classList.add('in')));
+ io&&io.disconnect();io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+ $$('.rv').forEach(el=>io.observe(el));
+ $$('.cp').forEach(b=>b.onclick=async()=>{const t=b.closest('.pr').querySelector('pre').textContent;try{await navigator.clipboard.writeText(t)}catch{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch{}a.remove()}b.textContent='Copié !';setTimeout(()=>b.textContent='Copier',1600)});
+ $('.f').onsubmit=e=>{e.preventDefault();const f=e.target,er=$('.err'),n=f.n.value.trim(),m=f.e.value.trim(),t=f.m.value.trim();
+  if(!n){er.textContent='Dis-moi ton nom.';return f.n.focus()}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m)){er.textContent='Cette adresse e-mail semble incorrecte.';return f.e.focus()}
+  if(t.length<10){er.textContent='Ton message est un peu court (10 caractères minimum).';return f.m.focus()}
+  er.textContent='';$('.ct').classList.add('sent')};
+ upd();
+}
+function upd(){
+ document.documentElement.style.setProperty('--sy',scrollY);
+ const a=$('.art article');if(!a)return;
+ const r=a.getBoundingClientRect(),h=Math.max(1,r.height-innerHeight*.6),p=Math.min(1,Math.max(0,(innerHeight*.3-r.top)/h));
+ pg.style.opacity=(r.top<innerHeight&&r.bottom>0)?1:0;pg.style.setProperty('--p',p);
+ const c=$('.pct');if(c)c.textContent=Math.round(p*100)+' %';
+ let act=null;$$('.art h2').forEach(x=>{if(x.getBoundingClientRect().top<innerHeight*.4)act=x.id});
+ $$('.toc a').forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+act));
+}
+addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);
+$$('.tabs button').forEach((b,i)=>b.onclick=()=>render(i));
+render(0);
+</script>
+</body>
+</html>

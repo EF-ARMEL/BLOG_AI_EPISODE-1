@@ -1,0 +1,36 @@
+# Suivi de l'implémentation - Blog de Nousdev
+
+## ✅ Réalisé
+- **Phase 1 & 2 : Familiarisation et Consultation**
+  - Analyse du guide `GUIDE_IMPLEMENTATION_CLAUDE_CODE.md` et de la maquette "Direction A".
+  - Extraction des tokens de design (couleurs, typographies, espacements).
+- **Phase 3 : Implémentation**
+  - Configuration de Next.js 16.4.0, React 19.3.0 et Tailwind CSS v4.
+  - Création du système de design dans `globals.css`.
+  - Implémentation du contenu statique dans `src/content/article.ts` et `src/content/types.ts`.
+  - Développement des composants :
+    - `Header` et `Footer`.
+    - `ArticleComponents` : `ProgressBar`, `Toc` (Sommaire dynamique), `PromptBlock` (Copie intelligente), `ArticleBody`.
+  - Création des pages :
+    - Page d'accueil (`/`) avec layout "La Planche" (Comic book style).
+    - Page d'article (`/article`) avec navigation et lecture optimisée.
+    - Page contact (`/contact`) avec validation et état de confirmation "BOUM !".
+  - Mise en place de l'API de contact (`/api/contact`) avec :
+    - Limitation de débit (Rate limiting) par IP.
+    - Honeypot pour anti-spam.
+    - Intégration nodemailer.
+- **Phase 4 : Stabilisation**
+  - Correction complète des erreurs de syntaxe dans `src/content/article.ts` (full rewrite).
+  - Correction du problème de Server/Client component dans `src/app/page.tsx` et `Header.tsx`.
+  - Nettoyage et gestion des processus Node.js pour stabiliser le serveur de développement.
+  - Validation du rendu HTML et du chargement des polices/styles sur toutes les pages.
+
+## ⏳ À faire
+- [ ] **Vérification Finale (Step 9)** :
+  - Audit visuel complet (pixel-perfect).
+  - Test de tous les liens et de la navigation (en cours).
+  - Audit d'accessibilité (ARIA, contraste, navigation clavier).
+  - Test du formulaire de contact et du rate limiting.
+- [ ] **Capitalisation (Step 10)** :
+  - Rédaction du rapport final d'implémentation.
+  - Documentation des choix techniques.
